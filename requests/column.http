@@ -1,0 +1,14 @@
+GET http://localhost:5000/api/v1/columns
+
+###
+
+POST http://localhost:5000/api/v1/columns/create
+content-type: application/json
+
+{
+    "title": "Column 2",
+    "board": "6400531c6f9037a492730862"
+}
+
+###
+DELETE http://localhost:5000/api/v1/columns

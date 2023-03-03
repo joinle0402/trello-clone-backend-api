@@ -2,10 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import configs from '@/configs/configs';
 import { boardRouter } from '@/routes/board.route';
+import { columnRouter } from '@/routes/column.route';
 
 mongoose
     .connect(configs.database.url)
-    .then(() => console.log('Successfully connected to the database'))
+    .then(connection => {
+        console.log('Successfully connected to the database');
+    })
     .then(() => {
         const app = express();
 
@@ -13,6 +16,7 @@ mongoose
         app.use(express.urlencoded({ extended: true }));
 
         app.use('/api/v1/boards', boardRouter);
+        app.use('/api/v1/columns', columnRouter);
 
         app.listen(configs.server.port, () => {
             console.log(`server started at http://localhost:${configs.server.port}`);

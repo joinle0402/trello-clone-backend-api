@@ -1,8 +1,10 @@
-import { model, Schema } from 'mongoose';
+import { ColumnDocument } from '@/models/column.model';
+import { model, Schema, Types } from 'mongoose';
 
 export interface BoardDocument {
     title: string;
-    columnOrder: string[];
+    columnOrder: Types.Array<Types.ObjectId>;
+    columns: Types.DocumentArray<ColumnDocument>;
     _destroy: boolean;
 }
 
@@ -12,10 +14,13 @@ const boardSchema = new Schema<BoardDocument>(
             type: String,
             required: true,
             trim: true,
-            unique: true,
         },
         columnOrder: {
-            type: [String],
+            type: [Types.ObjectId],
+            default: [],
+        },
+        columns: {
+            type: [{ type: Schema.Types.ObjectId, ref: 'Columns' }],
             default: [],
         },
         _destroy: {
@@ -28,4 +33,4 @@ const boardSchema = new Schema<BoardDocument>(
     }
 );
 
-export const Board = model<BoardDocument>('Board', boardSchema);
+export const Board = model<BoardDocument>('Boards', boardSchema);

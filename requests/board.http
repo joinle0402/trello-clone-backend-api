@@ -6,7 +6,7 @@ POST http://localhost:5000/api/v1/boards/create
 content-type: application/json
 
 {
-    "title": "Board 1"
+    "title": "Board 2"
 }
 
 ###

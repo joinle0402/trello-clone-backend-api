@@ -1,5 +1,3 @@
-export interface createBoardBody {
+export interface CreateBoardBody {
     title: string;
 }
-
-

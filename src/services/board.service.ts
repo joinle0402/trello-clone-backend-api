@@ -1,17 +1,17 @@
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { BoardDocument, Board } from '@/models/board.model';
+import { CreateBoardBody } from '@/types/board.type';
 
 const findAll = async () => {
-    const boards = await Board.find();
-    return boards;
+    return await Board.find().populate('columns').exec();
 };
 
-const create = async (boardInput: any) => {
+const create = async (createBoardBody: CreateBoardBody) => {
     try {
-        const board: HydratedDocument<BoardDocument> = new Board(boardInput);
-        await board.save();
+        const createdBoard: HydratedDocument<BoardDocument> = new Board(createBoardBody);
+        await createdBoard.save();
 
-        return board;
+        return createdBoard;
     } catch (error) {
         throw new Error(error);
     }
@@ -25,8 +25,22 @@ const deleteAll = async () => {
     }
 };
 
+const updateColumnInBoard = async (boardId: Types.ObjectId, columnId: Types.ObjectId) => {
+    try {
+        const updatedBoard = await Board.findByIdAndUpdate(
+            boardId,
+            { $push: { columnOrder: columnId, columns: columnId } },
+            { new: true }
+        );
+        return updatedBoard;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export const boardService = {
     findAll,
     create,
     deleteAll,
+    updateColumnInBoard,
 };
