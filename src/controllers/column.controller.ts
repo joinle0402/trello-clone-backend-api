@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { columnService } from '@/services/column.service';
-import { boardService } from '@/services/board.service';
 
 const findAll = async (request: Request, response: Response) => {
     const columns = await columnService.findAll();
@@ -13,8 +12,7 @@ const findAll = async (request: Request, response: Response) => {
 
 const create = async (request: Request, response: Response) => {
     try {
-        const createdColumn = await columnService.create(request.body);
-        const updatedBoard = await boardService.updateColumnInBoard(request.body.board, createdColumn._id);
+        const { createdColumn, updatedBoard } = await columnService.create(request.body);
 
         response.status(201).json({
             message: 'Column created successfully',

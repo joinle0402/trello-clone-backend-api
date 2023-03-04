@@ -3,7 +3,16 @@ import { BoardDocument, Board } from '@/models/board.model';
 import { CreateBoardBody } from '@/types/board.type';
 
 const findAll = async () => {
-    return await Board.find().populate('columns').exec();
+    return await Board.find()
+        .populate({
+            path: 'columns',
+            model: 'Columns',
+            populate: {
+                path: 'cards',
+                model: 'Cards',
+            },
+        })
+        .exec();
 };
 
 const create = async (createBoardBody: CreateBoardBody) => {

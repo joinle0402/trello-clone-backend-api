@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import configs from '@/configs/configs';
 import { boardRouter } from '@/routes/board.route';
 import { columnRouter } from '@/routes/column.route';
+import { cardRouter } from '@/routes/card.route';
 
 mongoose
     .connect(configs.database.url)
@@ -17,6 +18,7 @@ mongoose
 
         app.use('/api/v1/boards', boardRouter);
         app.use('/api/v1/columns', columnRouter);
+        app.use('/api/v1/cards', cardRouter);
 
         app.listen(configs.server.port, () => {
             console.log(`server started at http://localhost:${configs.server.port}`);

@@ -1,0 +1,14 @@
+GET http://localhost:5000/api/v1/cards
+
+###
+
+POST http://localhost:5000/api/v1/cards/create
+content-type: application/json
+
+{
+    "title": "Card 1",
+    "columnId": "6403078dedf2ef1d169dcbe3"
+}
+
+###
+DELETE http://localhost:5000/api/v1/cards
