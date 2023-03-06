@@ -1,4 +1,4 @@
-import { CreateCardBody } from '@/types/card.type';
+import { CreateCardBody, UpdateCardBody } from '@/types/card.type';
 import { HydratedDocument } from 'mongoose';
 import { CardDocument, Card } from '@/models/card.model';
 import { Column } from '@/models/column.model';
@@ -29,6 +29,15 @@ const create = async (cardInput: CreateCardBody) => {
     }
 };
 
+const updateById = async (columnId: string, updateCardBody: UpdateCardBody) => {
+    try {
+        const updatedCard = await Column.findByIdAndUpdate(columnId, { $set: updateCardBody }, { new: true });
+        return updatedCard;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const deleteAll = async () => {
     try {
         await Card.deleteMany({});
@@ -40,5 +49,6 @@ const deleteAll = async () => {
 export const cardService = {
     findAll,
     create,
+    updateById,
     deleteAll,
 };

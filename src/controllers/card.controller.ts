@@ -26,6 +26,18 @@ const create = async (request: Request, response: Response) => {
     }
 };
 
+const updateById = async (request: Request, response: Response) => {
+    try {
+        const updatedCard = await cardService.updateById(request.params.cardId, request.body);
+        response.status(200).json({
+            message: 'Update card successfully!',
+            updatedCard,
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const deleteAll = async (request: Request, response: Response) => {
     try {
         await cardService.deleteAll();
@@ -43,5 +55,6 @@ const deleteAll = async (request: Request, response: Response) => {
 export const cardController = {
     findAll,
     create,
+    updateById,
     deleteAll,
 };

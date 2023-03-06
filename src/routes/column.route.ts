@@ -7,4 +7,6 @@ export const columnRouter = Router();
 
 columnRouter.get('/', columnController.findAll);
 columnRouter.post('/create', validate(createColumnValidator), columnController.create);
+columnRouter.put('/:columnId', columnController.updateById);
 columnRouter.delete('/', columnController.deleteAll);
+columnRouter.delete('/:columnId', columnController.deleteById);

@@ -5,3 +5,8 @@ export interface CreateCardBody {
     thumbnail?: string;
     columnId: Types.ObjectId;
 }
+
+export interface UpdateCardBody {
+    title?: string;
+    column?: Types.ObjectId;
+}

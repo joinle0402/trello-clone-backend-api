@@ -2,6 +2,10 @@ GET http://localhost:5000/api/v1/boards
 
 ###
 
+GET http://localhost:5000/api/v1/boards/6403077aedf2ef1d169dcbd6
+
+###
+
 POST http://localhost:5000/api/v1/boards/create
 content-type: application/json
 

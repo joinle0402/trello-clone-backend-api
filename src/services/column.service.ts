@@ -1,4 +1,4 @@
-import { CreateColumnBody } from '@/types/column.type';
+import { CreateColumnBody, UpdateColumnBody } from '@/types/column.type';
 import { HydratedDocument } from 'mongoose';
 import { ColumnDocument, Column } from '@/models/column.model';
 import { Board } from '@/models/board.model';
@@ -29,6 +29,15 @@ const create = async (columnInput: CreateColumnBody) => {
     }
 };
 
+const updateById = async (columnId: string, updateColumnBody: UpdateColumnBody) => {
+    try {
+        const updatedColumn = await Column.findByIdAndUpdate(columnId, { $set: updateColumnBody }, { new: true });
+        return updatedColumn;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const deleteAll = async () => {
     try {
         await Column.deleteMany({});
@@ -37,8 +46,18 @@ const deleteAll = async () => {
     }
 };
 
+const deleteById = async (columnId: string) => {
+    try {
+        await Column.deleteMany({ _id: { $in: [columnId] } });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export const columnService = {
     findAll,
     create,
+    updateById,
     deleteAll,
+    deleteById,
 };

@@ -10,6 +10,15 @@ const findAll = async (request: Request, response: Response) => {
     });
 };
 
+const findOne = async (request: Request, response: Response) => {
+    const board = await boardService.findOne(request.params.boardId);
+
+    response.status(200).json({
+        message: 'Get all board successfully',
+        board,
+    });
+};
+
 const create = async (request: Request, response: Response) => {
     try {
         const createdBoard = await boardService.create(request.body);
@@ -17,6 +26,21 @@ const create = async (request: Request, response: Response) => {
         response.status(201).json({
             message: 'Board created successfully',
             createdBoard,
+        });
+    } catch (error) {
+        response.status(500).json({
+            error: error.message,
+        });
+    }
+};
+
+const updateById = async (request: Request, response: Response) => {
+    try {
+        const updatedBoard = await boardService.updateBoardById(request.params.boardId, request.body);
+
+        response.status(201).json({
+            message: 'Board updated successfully',
+            updatedBoard,
         });
     } catch (error) {
         response.status(500).json({
@@ -41,6 +65,8 @@ const deleteAll = async (request: Request, response: Response) => {
 
 export const boardController = {
     findAll,
+    findOne,
     create,
+    updateById,
     deleteAll,
 };

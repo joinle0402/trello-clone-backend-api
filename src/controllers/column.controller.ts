@@ -26,6 +26,18 @@ const create = async (request: Request, response: Response) => {
     }
 };
 
+const updateById = async (request: Request, response: Response) => {
+    try {
+        const updatedColumn = await columnService.updateById(request.params.columnId, request.body);
+        response.status(200).json({
+            message: 'Update column successfully!',
+            updatedColumn,
+        });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const deleteAll = async (request: Request, response: Response) => {
     try {
         await columnService.deleteAll();
@@ -40,8 +52,24 @@ const deleteAll = async (request: Request, response: Response) => {
     }
 };
 
+const deleteById = async (request: Request, response: Response) => {
+    try {
+        await columnService.deleteById(request.params.columnId);
+
+        response.status(200).json({
+            message: 'Delete column successfully!',
+        });
+    } catch (error) {
+        response.status(400).json({
+            error: error.message,
+        });
+    }
+};
+
 export const columnController = {
     findAll,
     create,
+    updateById,
     deleteAll,
+    deleteById,
 };

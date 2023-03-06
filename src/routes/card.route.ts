@@ -7,4 +7,5 @@ export const cardRouter = Router();
 
 cardRouter.get('/', cardController.findAll);
 cardRouter.post('/create', validate(createCardValidator), cardController.create);
+cardRouter.put('/:cardId', cardController.updateById);
 cardRouter.delete('/', cardController.deleteAll);

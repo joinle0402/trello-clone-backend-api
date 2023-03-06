@@ -1,9 +1,22 @@
 import { HydratedDocument, Types } from 'mongoose';
 import { BoardDocument, Board } from '@/models/board.model';
-import { CreateBoardBody } from '@/types/board.type';
+import { CreateBoardBody, UpdateBoardBody } from '@/types/board.type';
 
 const findAll = async () => {
     return await Board.find()
+        .populate({
+            path: 'columns',
+            model: 'Columns',
+            populate: {
+                path: 'cards',
+                model: 'Cards',
+            },
+        })
+        .exec();
+};
+
+const findOne = async id => {
+    return await Board.findOne({ _id: id })
         .populate({
             path: 'columns',
             model: 'Columns',
@@ -47,9 +60,19 @@ const updateColumnInBoard = async (boardId: Types.ObjectId, columnId: Types.Obje
     }
 };
 
+const updateBoardById = async (boardId: string, updateBoardBody: UpdateBoardBody) => {
+    try {
+        return await Board.findByIdAndUpdate(boardId, { $set: updateBoardBody }, { new: true });
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export const boardService = {
     findAll,
+    findOne,
     create,
     deleteAll,
     updateColumnInBoard,
+    updateBoardById,
 };

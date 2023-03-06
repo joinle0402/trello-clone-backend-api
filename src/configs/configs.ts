@@ -1,6 +1,9 @@
 import 'dotenv/config';
 
 const configs = {
+    client: {
+        url: process.env.CLIENT_URL || '',
+    },
     server: {
         port: process.env.PORT || 5001,
     },
