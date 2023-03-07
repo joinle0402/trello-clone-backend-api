@@ -37,20 +37,4 @@ const cardSchema = new Schema<CardDocument>(
     }
 );
 
-cardSchema.pre('deleteMany', async function (next: NextFunction) {
-    try {
-        const deletedCards = await Card.find(this['_conditions']);
-        for (const deletedCard of deletedCards) {
-            await Column.findOneAndUpdate(
-                { _id: deletedCard.column },
-                { $pull: { cardOrder: deletedCard._id, cards: deletedCard._id } }
-            );
-        }
-
-        return next();
-    } catch (error) {
-        return next(error);
-    }
-});
-
 export const Card = model<CardDocument>('Cards', cardSchema);

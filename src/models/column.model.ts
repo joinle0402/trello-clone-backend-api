@@ -46,6 +46,10 @@ columnSchema.pre('deleteMany', async function (next: NextFunction) {
     try {
         const deletedColumns = await Column.find(this['_conditions']);
         for (const deletedColumn of deletedColumns) {
+            if (deletedColumn['cardOrder'].length > 0) {
+                await Card.deleteMany({ _id: { $in: [...deletedColumn['cardOrder']] } });
+            }
+
             await Board.findOneAndUpdate(
                 { _id: deletedColumn.board },
                 { $pull: { columnOrder: deletedColumn._id, columns: deletedColumn._id } }

@@ -31,7 +31,7 @@ const create = async (cardInput: CreateCardBody) => {
 
 const updateById = async (columnId: string, updateCardBody: UpdateCardBody) => {
     try {
-        const updatedCard = await Column.findByIdAndUpdate(columnId, { $set: updateCardBody }, { new: true });
+        const updatedCard = await Card.findByIdAndUpdate(columnId, { $set: { ...updateCardBody } }, { new: true });
         return updatedCard;
     } catch (error) {
         throw new Error(error);

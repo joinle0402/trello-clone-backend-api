@@ -6,6 +6,7 @@ export interface CreateColumnBody {
 }
 
 export interface UpdateColumnBody {
+    _id?: Types.ObjectId;
     title?: string;
     cardOrder?: Types.Array<Types.ObjectId>;
 }

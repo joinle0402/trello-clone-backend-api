@@ -31,7 +31,11 @@ const create = async (columnInput: CreateColumnBody) => {
 
 const updateById = async (columnId: string, updateColumnBody: UpdateColumnBody) => {
     try {
-        const updatedColumn = await Column.findByIdAndUpdate(columnId, { $set: updateColumnBody }, { new: true });
+        const updatedColumn = await Column.findByIdAndUpdate(
+            columnId,
+            { $set: { ...updateColumnBody } },
+            { new: true }
+        );
         return updatedColumn;
     } catch (error) {
         throw new Error(error);

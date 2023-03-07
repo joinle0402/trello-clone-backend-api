@@ -6,8 +6,8 @@ POST http://localhost:5000/api/v1/cards/create
 content-type: application/json
 
 {
-    "title": "Card 2",
-    "columnId": "640310ee7f746d03cd249948"
+    "title": "Card 4",
+    "columnId": "64069e261bce6635ca6318aa"
 }
 
 ###

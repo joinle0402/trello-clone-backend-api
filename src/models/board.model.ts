@@ -38,7 +38,7 @@ boardSchema.pre('deleteMany', async function (next: NextFunction) {
     try {
         const deletedBoards = await Board.find(this['_conditions']);
         deletedBoards.forEach(async deletedBoard => {
-            await Column.deleteMany({ _id: { $in: deletedBoard['columns'] } });
+            await Column.deleteMany({ _id: { $in: [...deletedBoard['columns']] } });
         });
 
         return next();
